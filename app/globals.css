@@ -1,26 +1,385 @@
 @import "tailwindcss";
 
+/* ── Theme tokens ─────────────────────────────────────────────
+   Neutrals: graphite + off-white + polished-steel gray.
+   One accent: tempered-steel blue.
+   ─────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg: #f3f2ee;
+  --surface: #faf9f6;
+  --ink: #16181b;
+  --ink-2: #4a4f56;
+  --steel: #8b919a;
+  --line: #d7d6d0;
+  --line-strong: #b9b9b2;
+  --grain: #16181b;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Accent A — tempered-steel blue (the ~300 °C temper color) */
+  --accent: #2b539c;
+  --accent-fill: #2b539c;
+  --accent-on: #ffffff;
+
+  --font-display: var(--fa-display);
+  --font-text: var(--fa-text);
+  --font-code: var(--fa-mono);
+
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #0f1113;
+    --surface: #16191c;
+    --ink: #e9e8e3;
+    --ink-2: #a7acb3;
+    --steel: #6d737b;
+    --line: #272b30;
+    --line-strong: #3a3f45;
+    --grain: #e9e8e3;
+    --accent: #8fb0ee;
+    --accent-fill: #8fb0ee;
+    --accent-on: #0f1113;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1113;
+  --surface: #16191c;
+  --ink: #e9e8e3;
+  --ink-2: #a7acb3;
+  --steel: #6d737b;
+  --line: #272b30;
+  --line-strong: #3a3f45;
+  --grain: #e9e8e3;
+  --accent: #8fb0ee;
+  --accent-fill: #8fb0ee;
+  --accent-on: #0f1113;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-steel: var(--steel);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-on: var(--accent-on);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-text);
+  --font-mono: var(--font-code);
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-fill);
+  color: var(--accent-on);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Display type: Big Shoulders, set in caps like stamped plate lettering. */
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  font-variation-settings: "opsz" 72;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+
+/* Micrograph-annotation labels */
+.specimen {
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Loader ──────────────────────────────────────────────────
+   Hidden unless the inline head script set data-loader (first visit this
+   session, motion allowed). The CSS failsafe hides it after 4 s even if
+   JavaScript never runs, so content is never trapped behind it. */
+.loader {
+  display: none;
+}
+:root[data-loader] .loader {
+  display: block;
+  animation: loader-failsafe 0.3s ease 4s forwards;
+}
+@keyframes loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Filter chips reflow the work grid with a View Transition. */
+::view-transition-group(*) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ── Living microstructure ───────────────────────────────────
+   Everything below is opacity/transform only (compositor-friendly) and
+   switched off entirely with reduced motion. */
+
+/* Grain growth: three structures crossfade, fine → coarse, on a slow loop. */
+.recryst {
+  opacity: 0;
+}
+.recryst:first-child {
+  opacity: 1;
+}
+.grain-base {
+  opacity: 0.07;
+  mask-image: radial-gradient(ellipse at 70% 40%, black, transparent 75%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .recryst {
+    animation: recryst 36s ease-in-out infinite;
+  }
+  .recryst:nth-child(2) {
+    animation-delay: -24s;
+  }
+  .recryst:nth-child(3) {
+    animation-delay: -12s;
+  }
+}
+@keyframes recryst {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  33% {
+    opacity: 1;
+  }
+  43% {
+    opacity: 0;
+  }
+}
+
+/* Microscope objective: crisp grains inside a circle that follows the cursor. */
+.grain-lens,
+.lens-reticle {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .grain-lens {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    --lens: 150px;
+    mask-image: radial-gradient(
+      circle var(--lens) at var(--mx, 50%) var(--my, 50%),
+      black 70%,
+      transparent 100%
+    );
+  }
+  .lens-reticle {
+    display: block;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 300px;
+    border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    border-radius: 9999px;
+    opacity: 0;
+    transform: translate(calc(var(--mx, 50%) - 150px), calc(var(--my, 50%) - 150px));
+    transition: opacity 0.4s ease;
+  }
+  .lens-reticle::before,
+  .lens-reticle::after {
+    content: "";
+    position: absolute;
+    background: color-mix(in srgb, var(--ink) 25%, transparent);
+  }
+  .lens-reticle::before {
+    left: 50%;
+    top: 46%;
+    width: 1px;
+    height: 8%;
+  }
+  .lens-reticle::after {
+    top: 50%;
+    left: 46%;
+    height: 1px;
+    width: 8%;
+  }
+  .microscope[data-lens="on"] .grain-lens {
+    opacity: 0.32;
+  }
+  .microscope[data-lens="on"] .lens-reticle {
+    opacity: 1;
+  }
+}
+
+/* Etched reveals as sections scroll into view (Chrome, Edge, Safari 26+;
+   elsewhere everything is simply visible). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+    .scalebar {
+      transform-origin: left;
+      animation: scalebar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    .etch-in {
+      animation: etch-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes scalebar {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes etch-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Temper colors — the oxide tints steel takes on as it's tempered hotter.
+   Used as the periodic table's family colors. */
+:root {
+  --t-straw: #a8811c;
+  --t-bronze: #9a5a24;
+  --t-purple: #6b4a9b;
+  --t-blue: #2b539c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --t-straw: #e0bf5c;
+    --t-bronze: #d9925a;
+    --t-purple: #b29be0;
+    --t-blue: #8fb0ee;
+  }
+}
+:root[data-theme="dark"] {
+  --t-straw: #e0bf5c;
+  --t-bronze: #d9925a;
+  --t-purple: #b29be0;
+  --t-blue: #8fb0ee;
+}
+
+/* Periodic-table key: crossfade when a new element is selected. */
+.element-key {
+  animation: key-in 0.35s ease-out both;
+}
+@keyframes key-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Flight log: a ring pings out from each pit stop. */
+.pit-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pit-ping 1.6s ease-out infinite;
+}
+@keyframes pit-ping {
+  from {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pit-ping {
+    animation: none;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .element-key {
+    animation: none;
+  }
+}
+
+/* "Now" indicator: a slow blink, like an instrument's power LED. */
+@media (prefers-reduced-motion: no-preference) {
+  .now-dot {
+    animation: now-blink 2.4s ease-in-out infinite;
+  }
+}
+@keyframes now-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Signature: pen draw-on. Each stroke draws in turn at constant pen speed
+   (--s start, --d duration, as fractions of --T). */
+.sig {
+  --T: 3.4s;
+}
+.sig .sig-ink {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+}
+.sig.is-drawn .sig-ink {
+  animation: sig-ink linear both;
+  animation-duration: calc(var(--d) * var(--T));
+  animation-delay: calc(var(--s) * var(--T));
+}
+@keyframes sig-ink {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sig .sig-ink {
+    stroke-dashoffset: 0;
+  }
 }

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#16181b"/>
+  <path d="M0 22l14-6 10 9-4 14-15 3zM24 25l14-9 12 7-2 13-12 4zM38 16l12-16M50 23l14-4M48 36l16 4M36 40l-2 24M20 39l-8 25M5 42l-5 2" fill="none" stroke="#e9e8e3" stroke-opacity=".14" stroke-width="1.2"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="30" fill="#e9e8e3" letter-spacing="-1">N<tspan fill="#8fb0ee">.</tspan>C</text>
+</svg>

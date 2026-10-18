@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Photo intake — never committed or deployed
+/_photo-intake/
+
+# Local tool logs
+osxphotos_crash.log
