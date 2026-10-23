@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Photo } from "@/content/photos";
 import DataBar from "./DataBar";
 import Picture from "./Picture";
@@ -53,6 +53,19 @@ export default function WorkTable({ families, items }: { families: string[]; ite
   // (focus fires before click, so checking at click time is too late).
   const touchArmed = useRef<string | null>(null);
 
+  // Sweep through the visible elements every 4s. Pointing at the tiles or
+  // tabbing into the table holds the current one so it can be read.
+  const [hovering, setHovering] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const paused = hovering || focused;
+  const shown = items.filter(inFamily);
+  const next = shown[(shown.indexOf(current) + 1) % shown.length];
+  useEffect(() => {
+    if (paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setTimeout(() => setSelected(next.slug), 4000);
+    return () => clearTimeout(t);
+  }, [paused, next.slug]);
+
   function setFamily(next: string) {
     const url = new URL(location.href);
     if (next === "all") url.searchParams.delete("view");
@@ -62,7 +75,11 @@ export default function WorkTable({ families, items }: { families: string[]; ite
   }
 
   return (
-    <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,23rem)_minmax(0,1fr)] lg:gap-12">
+    <div
+      className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,23rem)_minmax(0,1fr)] lg:gap-12"
+      onFocus={(e) => setFocused(e.target.matches(":focus-visible"))}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setFocused(false)}
+    >
       <div>
         {/* Legend doubles as the filter, like the family key on a periodic table. */}
         <div role="group" aria-label="Filter by family" className="flex flex-wrap gap-x-4 gap-y-2">
@@ -92,7 +109,11 @@ export default function WorkTable({ families, items }: { families: string[]; ite
           })}
         </div>
 
-        <ul className="mt-5 grid grid-cols-3 gap-1.5">
+        <ul
+          className="mt-5 grid grid-cols-3 gap-1.5"
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+        >
           {items.map((it) => {
             const on = it.slug === current.slug;
             const dim = !inFamily(it);
@@ -174,7 +195,8 @@ export default function WorkTable({ families, items }: { families: string[]; ite
       </div>
 
       {/* The key: the selected element, enlarged. */}
-      <article key={current.slug} aria-live="polite" className="element-key min-w-0">
+      {/* Announce only changes the visitor made, not every step of the sweep. */}
+      <article key={current.slug} aria-live={paused ? "polite" : "off"} className="element-key min-w-0">
         <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
           {current.cover && (
             <Picture photo={current.cover} sizes="(min-width: 1024px) 760px, 100vw" />

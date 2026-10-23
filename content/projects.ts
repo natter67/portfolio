@@ -149,11 +149,11 @@ export const projects: Project[] = [
       "dana-mounts",
       "dana-mount-pile",
       "dana-lab-selfie",
-      "dana-lab-press",
       "dana-plant-floor",
       "dana-interns",
       "dana-plant-letters",
     ],
+    links: [{ label: "Final co-op presentation (PDF)", href: "/Nathan-Chan-Dana-Final-Presentation.pdf" }],
     published: true,
     confidential: true,
     caseStudy: {
