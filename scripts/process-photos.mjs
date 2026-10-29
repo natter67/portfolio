@@ -16,7 +16,8 @@ const WIDTHS = [480, 800, 1200, 1600, 2000];
 // extract crops a region of the (upright) original first.
 const sources = {
   // Hero
-  portrait: { src: "hero/IMG_4031-portrait.jpg" },
+  // Studio headshot is 3:2 landscape — crop to 3:4 around the subject to keep the hero shape.
+  portrait: { src: "hero/headshot-2026-10.jpg", extract: { left: 1440, top: 0, width: 3000, height: 4000 } },
   // Project covers
   "boring-illini-team": { src: "favorites/IMG_2591.JPG" },
   "acp-bench-test": { src: "favorites/IMG_4875.JPG" },

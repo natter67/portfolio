@@ -18,8 +18,8 @@ export type Photo = {
 
 const meta: Record<keyof typeof data, Omit<Photo, "id" | "width" | "height" | "widths" | "blur">> = {
   portrait: {
-    alt: "Nathan Chan smiling with arms crossed, in a blue gingham dress shirt, on a lawn under a tree with yellow autumn leaves.",
-    caption: "December 2024",
+    alt: "Studio headshot of Nathan Chan smiling, in a navy suit, light-blue checked shirt, and striped tie, against a gray backdrop.",
+    caption: "October 2026",
   },
   "boring-illini-team": {
     alt: "About fifteen Boring Illini members in orange hard hats and safety vests, gathered around the machine's launch pipe and a sponsor-logo drum at the competition site.",
