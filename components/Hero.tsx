@@ -54,7 +54,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <figure className="md:col-span-4 md:self-end">
+        <figure className="md:col-span-4 md:self-start">
           <div
             className="relative overflow-hidden rounded-sm border border-line bg-surface"
             style={{ aspectRatio: `${portrait.width} / ${portrait.height}` }}
