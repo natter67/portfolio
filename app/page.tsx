@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import SectionLabel from "@/components/SectionLabel";
 import WorkTable from "@/components/WorkTable";
 import { years } from "@/components/DataBar";
-import { Contact, Footer, Honors, Notes, Story, Strip, Toolkit } from "@/components/Sections";
+import { Contact, Footer, Notes, Skills, Story, Strip, h2, wrap } from "@/components/Sections";
 import Bench from "@/components/Bench";
 import Logbook from "@/components/Logbook";
 import { getLogbook } from "@/lib/strava";
@@ -30,16 +30,19 @@ const personLd = {
 
 export default async function Home() {
   const log = await getLogbook();
+  // Sections are numbered in render order, so the optional logbook never leaves a gap.
+  let count = 0;
+  const n = () => String(++count).padStart(2, "0");
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
       <Nav />
-      <main id="main">
+      <main id="main" className="pb-16">
         <Hero />
 
-        <section id="work" aria-labelledby="work-title" className="mx-auto max-w-7xl scroll-mt-8 px-4 py-16 sm:px-8">
-          <SectionLabel n="01">Selected work</SectionLabel>
-          <h2 id="work-title" className="reveal font-display mt-4 text-4xl font-semibold sm:text-5xl">
+        <section id="work" aria-labelledby="work-title" className={`${wrap} scroll-mt-20 py-20 sm:py-24`}>
+          <SectionLabel n={n()}>Selected work</SectionLabel>
+          <h2 id="work-title" className={h2}>
             Proof of work
           </h2>
           <WorkTable
@@ -59,16 +62,15 @@ export default async function Home() {
               cover: getPhoto(p.cover),
             }))}
           />
+          <Bench />
         </section>
 
-        <Bench />
-        <Strip />
-        {log && <Logbook data={log} />}
-        <Story />
-        <Notes />
-        <Toolkit />
-        <Honors />
-        <Contact />
+        <Strip n={n()} />
+        {log && <Logbook n={n()} data={log} />}
+        <Story n={n()} />
+        <Notes n={n()} />
+        <Skills n={n()} />
+        <Contact n={n()} />
       </main>
       <Footer />
     </>

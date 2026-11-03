@@ -76,22 +76,22 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
   return (
     <>
       <Nav />
-      <main id="main" className="mx-auto max-w-5xl px-4 pt-6 pb-24 sm:px-8">
-        <Link href="/#work" className="specimen text-ink-2 hover:text-ink">
+      <main id="main" className="mx-auto max-w-5xl px-5 pt-10 pb-24 sm:px-8">
+        <Link href="/#work" className="inline-flex items-center gap-2 rounded-full border border-line-strong px-3.5 py-1.5 text-sm text-ink-2 transition-colors hover:border-ink-2 hover:text-ink">
           ← All work
         </Link>
 
         <article className="mt-8">
           {/* Datasheet header strip */}
-          <div className="specimen flex flex-wrap justify-between gap-2 border-y border-ink py-2">
-            <span>Materials datasheet</span>
-            <span>
+          <div className="specimen flex flex-wrap justify-between gap-2 border-y border-line-strong py-3 text-ink-2">
+            <span className="text-ink">Materials datasheet</span>
+            <span className="text-accent">
               Specimen {p.specimen} — {p.label}
             </span>
-            <span className="text-ink-2">Rev. {updated}</span>
+            <span>Rev. {updated}</span>
           </div>
 
-          <h1 className="font-display mt-8 text-[clamp(2.5rem,7vw,5rem)] leading-[0.95] font-semibold">
+          <h1 className="font-display mt-10 text-[clamp(2.5rem,6.5vw,4.75rem)] leading-[1.02] tracking-[-0.04em]">
             {p.title}
           </h1>
           <p className="mt-3 text-lg text-ink-2">
@@ -99,27 +99,27 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
             {p.location && ` · ${p.location}`}
           </p>
 
-          <dl className="mt-10 border-t border-line-strong">
+          <dl className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface">
             {spec.map(([k, v]) => (
               <div
                 key={k}
-                className="grid gap-1 border-b border-line py-3 sm:grid-cols-[10rem_1fr] sm:gap-6"
+                className="grid gap-1 border-b border-line px-5 py-4 last:border-b-0 sm:grid-cols-[10rem_1fr] sm:gap-6 sm:px-6"
               >
-                <dt className="specimen pt-0.5 text-ink-2">{k}</dt>
-                <dd className={k === "Outcome" ? "font-medium" : ""}>{v}</dd>
+                <dt className="text-sm text-ink-2">{k}</dt>
+                <dd className={k === "Outcome" ? "font-medium text-ink" : "text-ink-2"}>{v}</dd>
               </div>
             ))}
           </dl>
 
           {p.confidential && (
-            <p className="specimen mt-4 text-ink-2">
+            <p className="mt-4 text-sm text-ink-2">
               Customer parts and findings are confidential — this page covers methods only.
             </p>
           )}
 
           <figure className="mt-12">
             <div
-              className="relative overflow-hidden rounded-sm border border-line bg-surface"
+              className="relative overflow-hidden rounded-2xl border border-line bg-surface"
               style={{
                 aspectRatio: cover ? `${Math.max(cover.width / cover.height, 4 / 3)}` : "16 / 9",
               }}
@@ -132,7 +132,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
               <DataBar project={p} className="absolute inset-x-0 bottom-0 text-[0.7rem]" />
             </div>
             {cover?.caption && (
-              <figcaption className="specimen mt-3 text-ink-2">Fig. 1 — {cover.caption}</figcaption>
+              <figcaption className="mt-3 text-sm text-ink-2">Fig. 1 — {cover.caption}</figcaption>
             )}
           </figure>
 
@@ -144,10 +144,10 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
             >
               <p className="specimen pt-2 text-accent">{String(n + 1).padStart(2, "0")}</p>
               <div className="min-w-0">
-                <h2 id={`s-${n}`} className="font-display text-3xl font-semibold">
+                <h2 id={`s-${n}`} className="font-display text-3xl tracking-[-0.035em] sm:text-4xl">
                   {title}
                 </h2>
-                <div className="mt-4 space-y-4 text-lg leading-relaxed">
+                <div className="mt-5 space-y-4 text-lg leading-relaxed text-ink/90">
                   {paras.map((t, k) => (
                     <p key={k}>{t}</p>
                   ))}
@@ -165,12 +165,12 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
                   figures.map((f) => (
                     <figure key={f.id} className="mt-8">
                       <div
-                        className="overflow-hidden rounded-sm border border-line"
+                        className="overflow-hidden rounded-2xl border border-line"
                         style={{ aspectRatio: `${f.width} / ${f.height}` }}
                       >
                         <Picture photo={f} sizes="(min-width: 1024px) 760px, 100vw" />
                       </div>
-                      <figcaption className="specimen mt-3 leading-relaxed text-ink-2">{f.caption}</figcaption>
+                      <figcaption className="mt-3 text-sm leading-relaxed text-ink-2">{f.caption}</figcaption>
                     </figure>
                   ))}
               </div>
@@ -184,12 +184,12 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
               {gallery.map((g, k) => (
                 <figure key={g.id} className="mb-6 break-inside-avoid">
                   <div
-                    className="overflow-hidden rounded-sm border border-line bg-surface"
+                    className="overflow-hidden rounded-2xl border border-line bg-surface"
                     style={{ aspectRatio: `${g.width} / ${g.height}` }}
                   >
                     <Picture photo={g} sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw" />
                   </div>
-                  <figcaption className="specimen mt-2 text-ink-2">
+                  <figcaption className="mt-3 text-sm text-ink-2">
                     Fig. {k + 2} — {g.caption}
                   </figcaption>
                 </figure>
@@ -200,10 +200,10 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
 
         <Link
           href={`/work/${next.slug}/`}
-          className="group mt-24 block border-t border-ink pt-6"
+          className="group mt-24 block rounded-3xl border border-line bg-surface p-7 transition-colors hover:border-accent-fill sm:p-9"
         >
-          <span className="specimen text-ink-2">Next specimen →</span>
-          <span className="font-display mt-2 block text-3xl font-semibold group-hover:text-accent">
+          <span className="text-sm font-medium text-accent">Next specimen →</span>
+          <span className="font-display mt-3 block text-2xl leading-tight transition-colors group-hover:text-accent sm:text-3xl">
             {next.title}
           </span>
         </Link>

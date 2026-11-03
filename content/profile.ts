@@ -36,12 +36,13 @@ export const profile = {
   interests:
     "Design, processing, and characterization of high-performance metals and alloys for advanced manufacturing, energy, and industrial applications — structure–processing–property relationships, failure analysis, and materials selection.",
 
+  // \u2011 is a non-breaking hyphen, so a name never splits across lines at its hyphen.
   // Logos live in public/logos/ (Wikimedia Commons; the Eagle badge is used to identify the rank earned).
   honors: [
     { name: "Eagle Scout", logo: "/logos/eagle-scout.png", org: "Scouting America" },
-    { name: "USA Water Polo Academic All-American", logo: "/logos/usa-water-polo.svg", org: "USA Water Polo" },
+    { name: "USA Water Polo Academic All\u2011American", logo: "/logos/usa-water-polo.svg", org: "USA Water Polo" },
     { name: "Barth Scholarship", logo: "/logos/rotary.svg", org: "Rotary Club of San Marino" },
-    { name: "James Scholar", logo: "/logos/illinois.svg", org: "University of Illinois Urbana-Champaign" },
+    { name: "James Scholar", logo: "/logos/illinois.svg", org: "University of Illinois Urbana\u2011Champaign" },
   ],
 
   toolkit: [
@@ -80,7 +81,7 @@ export const profile = {
     },
   ],
 
-  // "The story so far" — the flight log on the home page. In travel order;
+  // "The story so far" — the timeline map on the home page. In travel order;
   // lat/lon place each pit stop on the map. `proof` links to the work done there.
   route: [
     {
@@ -135,19 +136,19 @@ export const profile = {
       ],
     },
   ],
-  next: "The next lab, line, or launch pad. Let's talk.",
 
-  // The boarding pass under the flight map. Every number here must be real.
-  boarding: {
-    destinations: ["Aerospace", "Defense", "Semiconductors", "Energy", "Advanced mfg", "EVs & drivetrain", "Your team?"],
+  // The numbers along the bottom of the hero. Every number here must be real.
+  proof: [
+    { value: "25+", label: "production parts through failure analysis at Dana" },
+    { value: "52%", label: "fewer cutterhead revolutions, shown with repeated trials" },
+    { value: "30k+", label: "annual visitors on the EOH site I help build" },
+    { value: "8", label: "engineers on the muck-removal subsystem I lead" },
+  ],
+
+  // "Looking for" in the contact panel.
+  lookingFor: {
     seeking: "Internships & co-ops",
-    proof: [
-      { value: "25+", label: "production parts through failure analysis at Dana" },
-      { value: "52%", label: "fewer cutterhead revolutions, shown with repeated trials" },
-      { value: "30k+", label: "annual visitors on the EOH site I help build" },
-      { value: "8", label: "engineers on the muck-removal subsystem I lead" },
-    ],
-    carryOn: ["Metallography", "Failure analysis", "SEM / EDS", "Materials selection", "Python", "React / Next.js"],
+    industries: ["Aerospace", "Defense", "Semiconductors", "Energy", "Advanced manufacturing", "EVs & drivetrain"],
   },
 } as const;
 

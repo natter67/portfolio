@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import BoardingPass from "./BoardingPass";
 import { useEffect, useRef, useState } from "react";
 
 export type Stop = {
@@ -14,13 +13,13 @@ export type Stop = {
   y: number;
 };
 
-const PAUSE = 1300; // pit stop, ms
+const PAUSE = 1300; // pause at each stop, ms
 const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 
 /**
- * Flies the route once the section scrolls into view: the plane follows each
- * leg, the contrail draws behind it, and it pits at every stop while the log
- * highlights why it's there. Click any stop to fly straight to it.
+ * Traces the route once the section scrolls into view: a marker follows each
+ * leg, the line draws behind it, and it pauses at every stop while the log
+ * highlights why it's there. Click any stop to go straight to it.
  */
 export default function FlightPlayer({
   stops,
@@ -33,16 +32,16 @@ export default function FlightPlayer({
 }) {
   const root = useRef<HTMLDivElement>(null);
   const legRefs = useRef<(SVGPathElement | null)[]>([]);
-  const plane = useRef<SVGGElement>(null);
+  const marker = useRef<SVGGElement>(null);
   const run = useRef(0); // bump to cancel an in-flight tour
   const [active, setActive] = useState(0);
   const [flown, setFlown] = useState(0); // legs fully drawn
   const [moving, setMoving] = useState(false);
 
-  // Place the plane at a stop, facing along the leg it arrived on.
+  // Place the marker at a stop, at the end of the leg it arrived on.
   function park(i: number) {
     const el = legRefs.current[Math.max(0, i - 1)];
-    const p = plane.current;
+    const p = marker.current;
     if (!p) return;
     if (!el || i === 0) {
       p.setAttribute("transform", `translate(${stops[0].x},${stops[0].y}) rotate(-20)`);
@@ -70,7 +69,7 @@ export default function FlightPlayer({
         const b = el.getPointAtLength(Math.min(L, s + 1));
         const pt = el.getPointAtLength(s);
         const ang = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
-        plane.current?.setAttribute("transform", `translate(${pt.x},${pt.y}) rotate(${ang})`);
+        marker.current?.setAttribute("transform", `translate(${pt.x},${pt.y}) rotate(${ang})`);
         el.style.strokeDashoffset = `${L - s}`;
         if (t < 1) requestAnimationFrame(step);
         else resolve();
@@ -120,7 +119,7 @@ export default function FlightPlayer({
   }
 
   useEffect(() => {
-    // Hide contrails until they're flown.
+    // Hide each leg until it's traced.
     legRefs.current.forEach((el) => {
       if (!el) return;
       const L = el.getTotalLength();
@@ -159,7 +158,7 @@ export default function FlightPlayer({
 
   return (
     <div ref={root} className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
-      <figure className="relative">
+      <figure className="relative self-start lg:sticky lg:top-24">
         <svg viewBox="0 0 975 610" className="h-auto w-full" role="img" aria-label="Map of the United States showing Nathan's route: Pasadena, Champaign, Bastrop, Maumee, and back to Champaign.">
           {children}
           {legs.map((d, i) => (
@@ -187,7 +186,7 @@ export default function FlightPlayer({
                   cx={s.x}
                   cy={s.y}
                   r={on ? 6.5 : 5}
-                  fill={reached ? "var(--accent)" : "var(--bg)"}
+                  fill={reached ? "var(--accent)" : "var(--surface)"}
                   stroke="var(--accent)"
                   strokeWidth="2"
                 />
@@ -198,7 +197,7 @@ export default function FlightPlayer({
                     className="font-mono text-[13px] tracking-wider uppercase max-sm:text-[26px]"
                     fill={on ? "var(--ink)" : "var(--ink-2)"}
                     paintOrder="stroke"
-                    stroke="var(--bg)"
+                    stroke="var(--surface)"
                     strokeWidth="4"
                   >
                     {s.place.split(",")[0]}
@@ -207,20 +206,15 @@ export default function FlightPlayer({
               </g>
             );
           })}
-          {/* Plane, nose pointing along +x. */}
-          <g ref={plane} aria-hidden="true">
-            <path
-              d="M11 0L3-1.6-4-9h-3l3.6 7.4H-9.5l-2.4-3H-14l1.3 4.6L-14 4.6h2.1l2.4-3H-3.4L-7 9h3l7-7.4z"
-              fill="var(--ink)"
-              stroke="var(--bg)"
-              strokeWidth="1.2"
-              transform="scale(1.35)"
-            />
+          {/* The marker that traces the route. */}
+          <g ref={marker} aria-hidden="true">
+            <circle r="12" fill="var(--melon)" opacity="0.22" />
+            <circle r="5.5" fill="var(--melon)" stroke="var(--surface)" strokeWidth="2" />
           </g>
         </svg>
-        <figcaption className="specimen mt-2 flex flex-wrap justify-between gap-2 text-ink-2">
+        <figcaption className="mt-3 flex flex-wrap justify-between gap-2 text-sm text-ink-2">
           <span>
-            Pit stop {String(active + 1).padStart(2, "0")} / {String(stops.length).padStart(2, "0")} ·{" "}
+            Stop {String(active + 1).padStart(2, "0")} / {String(stops.length).padStart(2, "0")} ·{" "}
             {stops[active].place}
           </span>
           <button
@@ -240,12 +234,12 @@ export default function FlightPlayer({
             }}
             className="underline underline-offset-4 hover:text-ink"
           >
-            {moving ? "In flight…" : "Replay flight ↺"}
+            {moving ? "Playing…" : "Replay ↺"}
           </button>
         </figcaption>
       </figure>
 
-      <ol className="space-y-1" aria-label="Flight log">
+      <ol className="space-y-1" aria-label="Timeline">
         {stops.map((s, i) => {
           const on = i === active;
           return (
@@ -255,21 +249,21 @@ export default function FlightPlayer({
                 onClick={() => goTo(i)}
                 aria-current={on ? "step" : undefined}
                 className={`group w-full border-l-2 py-3 pr-2 pl-4 text-left transition-colors duration-300 ${
-                  on ? "border-accent" : "border-line hover:border-line-strong"
+                  on ? "border-accent-fill" : "border-line-strong hover:border-ink-2"
                 }`}
               >
-                <span className="specimen block text-accent">
+                <span className="block text-sm text-accent">
                   Stop {String(i + 1).padStart(2, "0")} · {s.when}
                 </span>
                 <span
-                  className={`font-display mt-1 block text-2xl leading-none transition-colors ${on ? "text-ink" : "text-ink-2 group-hover:text-ink"}`}
+                  className={`font-display mt-1.5 block text-xl leading-tight transition-colors ${on ? "text-ink" : "text-ink-2 group-hover:text-ink"}`}
                 >
                   {s.place} — {s.title}
                 </span>
-                <span className="mt-2 block text-sm text-ink-2">{s.text}</span>
+                <span className="mt-2 block text-sm leading-relaxed text-ink-2">{s.text}</span>
               </button>
               {on && s.proof.length > 0 && (
-                <p className="specimen flex flex-wrap gap-x-4 gap-y-1 pb-2 pl-4.5">
+                <p className="flex flex-wrap gap-x-4 gap-y-1 pb-2 pl-4.5 text-sm">
                   {s.proof.map((p) => (
                     <Link key={p.href} href={p.href} className="inline-block py-1.5 text-accent underline underline-offset-4">
                       {p.label} →
@@ -281,7 +275,6 @@ export default function FlightPlayer({
           );
         })}
       </ol>
-      <BoardingPass from={stops[stops.length - 1].place} />
     </div>
   );
 }

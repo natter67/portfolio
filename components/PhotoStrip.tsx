@@ -112,7 +112,7 @@ export default function PhotoStrip({ children }: { children: React.ReactNode }) 
             type="button"
             onClick={() => page(d)}
             aria-label={d < 0 ? "Previous photos" : "Next photos"}
-            className="grid h-10 w-10 place-items-center border border-line-strong text-ink-2 transition-colors hover:border-ink hover:text-ink"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-ink-2 transition-colors hover:border-accent-fill hover:bg-accent-fill hover:text-white"
           >
             {d < 0 ? "←" : "→"}
           </button>

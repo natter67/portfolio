@@ -11,19 +11,18 @@ export const metadata: Metadata = {
 };
 
 export default function Resume() {
-  const btn = "px-6 py-3 text-sm font-semibold transition-colors";
   return (
     <>
       <Nav />
-      <main id="main" className="mx-auto max-w-5xl px-4 pt-6 pb-24 sm:px-8">
+      <main id="main" className="mx-auto max-w-5xl px-5 pt-12 pb-24 sm:px-8">
         <SectionLabel n="00">Resume</SectionLabel>
-        <h1 className="font-display mt-4 text-5xl font-semibold sm:text-6xl">Resume</h1>
-        <p className="mt-3 text-ink-2">One page. Updated {updated}.</p>
-        <div className="mt-6 flex flex-wrap gap-3">
+        <h1 className="font-display mt-5 text-5xl tracking-[-0.04em] sm:text-6xl">Resume</h1>
+        <p className="mt-4 text-lg text-ink-2">One page. Updated {updated}.</p>
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
             href={profile.resume}
             download="Nathan-Chan-Resume.pdf"
-            className={`${btn} bg-accent-fill text-accent-on hover:opacity-90`}
+            className="btn btn-primary"
           >
             Download PDF ↓
           </a>
@@ -31,7 +30,7 @@ export default function Resume() {
             href={profile.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${btn} border border-line-strong hover:border-ink`}
+            className="btn btn-ghost"
           >
             Open in new tab ↗
           </a>
@@ -42,7 +41,7 @@ export default function Resume() {
           data={profile.resume}
           type="application/pdf"
           aria-label="Nathan Chan resume (PDF)"
-          className="mt-10 hidden aspect-[8.5/11] w-full rounded-sm border border-line bg-white md:block"
+          className="mt-10 hidden aspect-[8.5/11] w-full rounded-2xl border border-line bg-white md:block"
         >
           <p className="p-6">
             Your browser can&apos;t show PDFs inline.{" "}

@@ -21,13 +21,13 @@ export type Element = {
   cover?: Photo;
 };
 
-// Families take steel's temper colors: straw → bronze → purple → blue.
+// Families take the theme's colors: electric blue and cantaloupe, plus a paler partner of each.
 export const FAMILY_COLOR: Record<string, string> = {
-  Materials: "var(--t-blue)",
-  Engineering: "var(--t-straw)",
-  Software: "var(--t-bronze)",
-  Leadership: "var(--t-purple)",
-  Life: "var(--t-straw)",
+  Materials: "var(--fam-blue)",
+  Engineering: "var(--fam-melon)",
+  Software: "var(--fam-ice)",
+  Leadership: "var(--fam-peach)",
+  Life: "var(--fam-melon)",
 };
 
 // The active family lives in the URL (?view=materials) so links are shareable.
@@ -82,7 +82,7 @@ export default function WorkTable({ families, items }: { families: string[]; ite
     >
       <div>
         {/* Legend doubles as the filter, like the family key on a periodic table. */}
-        <div role="group" aria-label="Filter by family" className="flex flex-wrap gap-x-4 gap-y-2">
+        <div role="group" aria-label="Filter by family" className="flex flex-wrap gap-2">
           {["All", ...families].map((f) => {
             const key = f.toLowerCase();
             const on = key === active;
@@ -93,24 +93,26 @@ export default function WorkTable({ families, items }: { families: string[]; ite
                 type="button"
                 aria-pressed={on}
                 onClick={() => setFamily(key)}
-                className={`specimen flex items-center gap-2 border-b py-1 transition-colors ${
-                  on ? "border-ink text-ink" : "border-transparent text-ink-2 hover:text-ink"
+                className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                  on
+                    ? "border-ink bg-ink text-bg"
+                    : "border-line-strong text-ink-2 hover:border-ink-2 hover:text-ink"
                 }`}
               >
                 <span
                   aria-hidden="true"
-                  className="inline-block h-2.5 w-2.5"
-                  style={{ background: FAMILY_COLOR[f] ?? "var(--ink)" }}
+                  className="inline-block h-2 w-2 rounded-full"
+                  style={{ background: FAMILY_COLOR[f] ?? (on ? "var(--bg)" : "var(--ink)") }}
                 />
                 {f === "All" ? "All work" : f}
-                <span className="text-ink-2">{n}</span>
+                <span className={`font-mono text-[0.7rem] ${on ? "text-bg/60" : "text-ink-2"}`}>{n}</span>
               </button>
             );
           })}
         </div>
 
         <ul
-          className="mt-5 grid grid-cols-3 gap-1.5"
+          className="mt-6 grid grid-cols-3 gap-2"
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
@@ -122,14 +124,12 @@ export default function WorkTable({ families, items }: { families: string[]; ite
               <>
                 <span className="flex justify-between font-mono text-[0.6rem] leading-none">
                   <span>{it.specimen}</span>
-                  <span className={on ? "text-bg/70" : "text-ink-2"}>{it.year}</span>
+                  <span className={on ? "text-white/75" : "text-ink-2"}>{it.year}</span>
                 </span>
-                <span className="font-display text-[2.6rem] leading-none" style={{ textTransform: "none" }}>
-                  {it.symbol}
-                </span>
+                <span className="font-display text-[2.4rem] leading-none tracking-[-0.04em]">{it.symbol}</span>
                 <span
                   className={`truncate font-mono text-[0.55rem] leading-none tracking-wider uppercase ${
-                    on ? "text-bg/70" : "text-ink-2"
+                    on ? "text-white/75" : "text-ink-2"
                   }`}
                 >
                   {it.label}
@@ -140,12 +140,14 @@ export default function WorkTable({ families, items }: { families: string[]; ite
                 </span>
               </>
             );
-            const cls = `relative flex aspect-square flex-col justify-between border p-2 transition-[transform,opacity,background-color,color] duration-200 ${
-              on ? "z-10 scale-[1.06] border-ink bg-ink text-bg shadow-lg" : "border-line-strong bg-bg hover:z-10 hover:scale-[1.04]"
+            const cls = `relative flex aspect-square flex-col justify-between rounded-xl border p-2.5 transition-[transform,opacity,background-color,color,border-color] duration-200 ${
+              on
+                ? "z-10 scale-[1.06] border-accent-fill bg-accent-fill text-white shadow-[0_12px_40px_-12px_rgb(42_99_255/0.7)]"
+                : "border-line bg-surface hover:z-10 hover:scale-[1.04] hover:border-line-strong"
             } ${dim ? "opacity-25" : ""}`;
             const style = {
               boxShadow: on ? undefined : `inset 3px 0 0 ${color}`,
-              backgroundImage: on ? undefined : `linear-gradient(color-mix(in srgb, ${color} 9%, transparent), transparent)`,
+              backgroundImage: on ? undefined : `linear-gradient(color-mix(in srgb, ${color} 8%, transparent), transparent)`,
             };
             const select = () => setSelected(it.slug);
             return (
@@ -188,7 +190,7 @@ export default function WorkTable({ families, items }: { families: string[]; ite
             );
           })}
         </ul>
-        <p className="specimen mt-3 text-ink-2">
+        <p className="mt-4 text-sm text-ink-2">
           <span className="hidden lg:inline">Hover an element to read it · click to open the datasheet</span>
           <span className="lg:hidden">Tap an element to read it · tap again to open</span>
         </p>
@@ -197,43 +199,41 @@ export default function WorkTable({ families, items }: { families: string[]; ite
       {/* The key: the selected element, enlarged. */}
       {/* Announce only changes the visitor made, not every step of the sweep. */}
       <article key={current.slug} aria-live={paused ? "polite" : "off"} className="element-key min-w-0">
-        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-surface">
           {current.cover && (
             <Picture photo={current.cover} sizes="(min-width: 1024px) 760px, 100vw" />
           )}
           <DataBar project={current} className="absolute inset-x-0 bottom-0" />
         </div>
-        <div className="mt-5 flex gap-5">
+        <div className="mt-6 flex gap-5">
           <div
             aria-hidden="true"
-            className="hidden h-28 w-28 shrink-0 flex-col justify-between border-2 border-ink p-2 sm:flex"
-            style={{ boxShadow: `inset 5px 0 0 ${FAMILY_COLOR[current.family] ?? "var(--ink)"}` }}
+            className="hidden h-28 w-28 shrink-0 flex-col justify-between rounded-xl border border-line-strong bg-surface p-2.5 sm:flex"
+            style={{ boxShadow: `inset 4px 0 0 ${FAMILY_COLOR[current.family] ?? "var(--ink)"}` }}
           >
             <span className="flex justify-between font-mono text-[0.65rem] leading-none">
               <span>{current.specimen}</span>
               <span className="text-ink-2">{current.year}</span>
             </span>
-            <span className="font-display text-6xl leading-none" style={{ textTransform: "none" }}>
-              {current.symbol}
-            </span>
+            <span className="font-display text-[3.4rem] leading-none tracking-[-0.04em]">{current.symbol}</span>
             <span className="truncate font-mono text-[0.55rem] leading-none tracking-wider text-ink-2 uppercase">
               {current.family}
             </span>
           </div>
           <div className="min-w-0">
-            <h3 className="font-display text-3xl leading-[0.95] sm:text-4xl">{current.title}</h3>
-            <p className="specimen mt-2 text-ink-2">
+            <h3 className="font-display text-2xl leading-tight sm:text-3xl">{current.title}</h3>
+            <p className="mt-2 text-sm text-ink-2">
               {current.label}
               {current.dates && ` · ${current.dates}`}
             </p>
-            <p className="mt-3 max-w-xl text-ink-2">{current.outcome}</p>
+            <p className="mt-3 max-w-xl leading-relaxed text-ink-2">{current.outcome}</p>
             {current.href && (
               <Link
                 href={current.href}
-                className="specimen mt-4 inline-flex items-center gap-2 border-b border-accent pb-0.5 text-accent hover:gap-3"
-                style={{ transition: "gap .2s" }}
+                className="group/link mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-ink"
               >
-                Read the datasheet →
+                Read the datasheet
+                <span aria-hidden="true" className="transition-transform group-hover/link:translate-x-1">→</span>
               </Link>
             )}
           </div>

@@ -16,14 +16,14 @@ export async function GET() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#16181b",
-          color: "#e9e8e3",
+          background: "#06070b",
+          color: "#f2f4f8",
           fontFamily: "Display",
           fontSize: 110,
           letterSpacing: 0,
         }}
       >
-        N<span style={{ color: "#8fb0ee" }}>.</span>C
+        N<span style={{ color: "#ffa672" }}>.</span>C
       </div>
     ),
     { ...size, fonts: [{ name: "Display", data: display, weight: 800, style: "normal" }] },

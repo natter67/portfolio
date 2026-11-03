@@ -32,8 +32,8 @@ export default function FlightMap() {
 
   return (
     <FlightPlayer stops={stops} legs={legs}>
-      <path d={nation} fill="var(--surface)" stroke="var(--line-strong)" strokeWidth="1" />
-      <path d={states} fill="none" stroke="var(--line)" strokeWidth="0.75" strokeLinejoin="round" />
+      <path d={nation} fill="var(--surface-2)" stroke="var(--line-strong)" strokeWidth="1" />
+      <path d={states} fill="none" stroke="var(--line-strong)" strokeWidth="0.75" strokeLinejoin="round" />
     </FlightPlayer>
   );
 }

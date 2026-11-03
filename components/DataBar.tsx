@@ -29,7 +29,7 @@ export default function DataBar({
   return (
     <div
       aria-hidden="true"
-      className={`flex items-center gap-x-3 overflow-hidden bg-[#0d0f11]/90 px-2.5 py-1.5 font-mono text-[0.6rem] leading-none tracking-wider text-white uppercase ${className}`}
+      className={`flex items-center gap-x-3 overflow-hidden bg-bg/80 px-3 py-2 font-mono text-[0.6rem] leading-none tracking-wider text-white uppercase backdrop-blur-md ${className}`}
     >
       {field("No", project.specimen)}
       <span className="min-w-0 truncate">

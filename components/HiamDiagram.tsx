@@ -85,22 +85,22 @@ const STEPS: { title: string; detail: string; becomes: string; icon: React.React
 export default function HiamDiagram() {
   return (
     <figure className="mt-8">
-      <ol className="grid gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
         {STEPS.map((s, i) => (
-          <li key={s.title} className="flex gap-3 bg-bg p-4 break-words">
+          <li key={s.title} className="flex gap-3 bg-surface p-5 break-words">
             <svg viewBox="0 0 32 32" className="h-9 w-9 shrink-0 text-accent" aria-hidden="true">
               {s.icon}
             </svg>
             <div>
-              <p className="specimen text-ink-2">Step {String(i + 1).padStart(2, "0")}</p>
-              <p className="font-display mt-1 text-lg leading-tight font-semibold">{s.title}</p>
+              <p className="text-sm text-ink-2">Step {String(i + 1).padStart(2, "0")}</p>
+              <p className="font-display mt-1 text-lg leading-tight">{s.title}</p>
               <p className="mt-1 text-sm text-ink-2">{s.detail}</p>
-              <p className="specimen mt-2 text-accent">→ {s.becomes}</p>
+              <p className="mt-2 text-sm text-accent">→ {s.becomes}</p>
             </div>
           </li>
         ))}
       </ol>
-      <figcaption className="specimen mt-3 text-ink-2">
+      <figcaption className="mt-3 text-sm text-ink-2">
         Fig. — Hydrogel infusion additive manufacturing (HIAM): the metal goes in after printing.
       </figcaption>
     </figure>

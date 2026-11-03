@@ -4,13 +4,13 @@ import { steelCriteria, steelTradeStudy } from "@/content/projects";
 export default function SteelTable() {
   return (
     <figure className="mt-8">
-      <div className="overflow-x-auto rounded-sm border border-line">
+      <div className="overflow-x-auto rounded-2xl border border-line">
         <table className="w-full min-w-[46rem] text-left text-sm">
           <caption className="sr-only">
             Candidate cutterhead blade steels compared on hardness, strength, machinability, and
             heat-treat stability
           </caption>
-          <thead className="specimen bg-surface text-ink-2">
+          <thead className="bg-surface text-ink-2">
             <tr>
               <th scope="col" className="px-4 py-3 font-normal">Steel</th>
               {steelCriteria.map((c) => (
@@ -42,7 +42,7 @@ export default function SteelTable() {
           </tbody>
         </table>
       </div>
-      <figcaption className="specimen mt-3 text-ink-2">
+      <figcaption className="mt-3 text-sm text-ink-2">
         Table 1 — Values as compiled in the team&apos;s trade-study sheet, from the Online Metals
         product guide.
       </figcaption>

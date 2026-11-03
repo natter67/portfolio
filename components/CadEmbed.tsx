@@ -22,7 +22,7 @@ export default function CadEmbed({
 
   return (
     <figure className="mt-8">
-      <div className="relative aspect-[16/9] overflow-hidden rounded-sm border border-line bg-surface">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-line bg-surface">
         {live ? (
           <iframe
             src={embed}
@@ -39,14 +39,14 @@ export default function CadEmbed({
               onClick={() => setLive(true)}
               className="absolute inset-0 grid place-items-center bg-ink/0 transition-colors hover:bg-ink/10"
             >
-              <span className="bg-accent-fill px-5 py-2.5 text-sm font-semibold text-accent-on shadow-lg">
+              <span className="btn btn-primary shadow-lg">
                 Rotate the 3D model ⟳
               </span>
             </button>
           </>
         )}
       </div>
-      <figcaption className="specimen mt-3 flex flex-wrap justify-between gap-2 text-ink-2">
+      <figcaption className="mt-3 flex flex-wrap justify-between gap-2 text-sm text-ink-2">
         <span>Fig. — {title}</span>
         <a href={share} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
           Open in Autodesk viewer ↗

@@ -23,10 +23,9 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
 };
 
-// Runs before first paint: restores the theme choice, and decides whether to
-// show the loader (home page only, once per session, never with reduced motion).
+// Runs before first paint: decides whether to show the loader (home page only,
+// once per session, never with reduced motion).
 const headScript = `(function(){var d=document.documentElement;
-try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}
 try{if(location.pathname==='/'&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('etched'))d.setAttribute('data-loader','')}catch(e){}})()`;
 
 // Grain field for the loader's etch step, computed at build time.

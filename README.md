@@ -24,9 +24,9 @@ open a new tab or clear session storage. It never plays with reduced motion on.
 
 | What | Where |
 |---|---|
-| Name, one-liner, email, toolkit, honors | `content/profile.ts` |
+| Name, one-liner, email, toolkit, honors, hero numbers, "Looking for" | `content/profile.ts` |
 | "Now" line under the hero — **update monthly** | `now` in `content/profile.ts` |
-| Flight log (map stops, order, why each stop matters) | `route` in `content/profile.ts` — `lat`/`lon` place the pin |
+| Timeline (map stops, order, why each stop matters) | `route` in `content/profile.ts` — `lat`/`lon` place the pin |
 | Field notes (short posts, one problem each) | `content/notes.ts` — each becomes `/notes/<slug>/` |
 | The Bench (your micrographs) | `bench` in `content/photos.ts` + the image in `scripts/process-photos.mjs` |
 | "Updated <Month Year>" in the footer | `updated` in `content/profile.ts` |
@@ -82,9 +82,9 @@ After deploying, paste the URL into https://www.linkedin.com/post-inspector/ to 
 
 - **Static export:** no server. Images are pre-optimized by `scripts/process-photos.mjs`
   and served through `components/Picture.tsx` (AVIF → WebP, explicit sizes, lazy below the fold).
-- **Fonts:** Big Shoulders (display), Funnel Sans (text), and Martian Mono (labels), all
-  self-hosted by `next/font/google`. The TTFs in `assets/fonts/` (SIL Open Font License)
-  are used to draw the OG image.
+- **Fonts:** Big Shoulders (the name and the loader), Schibsted Grotesk (headings), Funnel Sans
+  (text), and Martian Mono (labels), all self-hosted by `next/font/google`. The TTFs in
+  `assets/fonts/` (SIL Open Font License) are used to draw the OG image.
 - **Grain textures** are Voronoi diagrams computed at build time (`lib/grains.ts`), so they
   cost no client JavaScript.
 - **Work section** is a periodic table (`components/WorkTable.tsx`): hover or focus an
