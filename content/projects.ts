@@ -235,7 +235,7 @@ export const projects: Project[] = [
     tags: ["Microstructure", "Image analysis", "Characterization"],
     cover: "om-dendrites-cover",
     figures: ["om-transitions", "om-heating", "om-phase-fraction", "om-cooling-rates"],
-    published: true,
+    published: false,
     caseStudy: {
       problem: [
         "A micrograph usually shows you the end state of solidification. The interesting part — dendrites nucleating, eutectic growing — happens inside a casting where you can't watch it.",

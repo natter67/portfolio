@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { bench, getPhoto } from "@/content/photos";
 import Picture from "./Picture";
 import SectionLabel from "./SectionLabel";
@@ -13,10 +12,7 @@ export default function Bench() {
       </h2>
       <p className="mt-3 max-w-2xl text-ink-2">
         Captures from my group&apos;s hot-stage runs in MSE 307: a transparent organic alloy that
-        freezes like a metal, so you can watch dendrites and eutectic grow live.{" "}
-        <Link href="/work/mse-307-solidification/" className="text-accent underline underline-offset-4">
-          The full study →
-        </Link>
+        freezes like a metal, so you can watch dendrites and eutectic grow live.
       </p>
       <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {bench.map((b) => {

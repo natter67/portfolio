@@ -131,7 +131,6 @@ export const profile = {
       text: "Leading Boring Illini's muck-removal subsystem for the 2027 competition, writing MSE 307 lab reports, and building the next EOH.",
       proof: [
         { label: "Muck-removal system", href: "/work/boring-illini-muck-removal/" },
-        { label: "MSE 307", href: "/work/mse-307-solidification/" },
       ],
     },
   ],
