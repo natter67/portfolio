@@ -164,7 +164,6 @@ export const projects: Project[] = [
         "Prepared metallurgical specimens — sectioning, mounting, grinding, polishing, and acid etching — for stereo and optical microscopy per industry standards.",
         "Verified properties and documented surface defects against spec with hardness testing, OES chemical composition analysis, and magnetic particle inspection.",
         "Analyzed microstructures and welds against engineering drawings, and investigated how upstream process and supplier changes affected weld quality.",
-        "Got hands-on time with SEM, EDS, and FTIR.",
       ],
       result: [
         "Materials and failure analysis on 25+ production components, written up as technical reports for engineering teams and clients.",
