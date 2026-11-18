@@ -7,8 +7,6 @@ import PhotoStrip from "./PhotoStrip";
 import SectionLabel from "./SectionLabel";
 import Signature from "./Signature";
 import FlightMap from "./FlightMap";
-import Link from "next/link";
-import { notes } from "@/content/notes";
 
 // Shared section styles for the home page.
 export const wrap = "mx-auto max-w-7xl px-5 sm:px-8";
@@ -70,44 +68,6 @@ export function Story({ n }: { n: string }) {
         </h2>
         <FlightMap />
       </div>
-    </section>
-  );
-}
-
-export function Notes({ n }: { n: string }) {
-  return (
-    <section id="notes" aria-labelledby="notes-title" className={`${wrap} scroll-mt-20 py-20 sm:py-24`}>
-      <SectionLabel n={n}>Field notes</SectionLabel>
-      <h2 id="notes-title" className={h2}>
-        How I think, in writing
-      </h2>
-      <ol className="mt-12 border-t border-line">
-        {notes.map((note, i) => (
-          <li key={note.slug} className="border-b border-line">
-            <Link
-              href={`/notes/${note.slug}/`}
-              className="group grid gap-3 py-8 sm:grid-cols-[6rem_1fr_auto] sm:items-center sm:gap-8"
-            >
-              <span className="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
-              <span>
-                <span className="font-display block text-2xl leading-tight transition-colors group-hover:text-accent sm:text-3xl">
-                  {note.title}
-                </span>
-                <span className="mt-2 block max-w-2xl leading-relaxed text-ink-2">{note.dek}</span>
-              </span>
-              <span className="flex items-center gap-4 text-sm text-ink-2">
-                {note.date}
-                <span
-                  aria-hidden="true"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line-strong text-base text-ink transition-colors group-hover:border-accent-fill group-hover:bg-accent-fill group-hover:text-white"
-                >
-                  →
-                </span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ol>
     </section>
   );
 }

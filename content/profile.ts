@@ -17,7 +17,7 @@ export const profile = {
     "I study metals from the grain up — how they're made, why they fail, and what to use instead.",
     "Materials Science & Engineering @ Illinois. Lab bench to boring machine, I work where materials meet hardware.",
   ],
-  meta: ["UIUC '28", "Grainger Engineering", "James Scholar"],
+  meta: ["UIUC '29", "Grainger Engineering", "James Scholar"],
 
   // "Now" — one line on what you're working on this month. Update monthly.
   now: {
@@ -29,7 +29,7 @@ export const profile = {
     school: "University of Illinois Urbana-Champaign",
     college: "Grainger College of Engineering",
     degree: "B.S. Materials Science & Engineering",
-    expected: "May 2028",
+    expected: "May 2029",
     minor: "Hoeft Technology & Management Minor",
   },
 
@@ -132,7 +132,6 @@ export const profile = {
       text: "Leading Boring Illini's muck-removal subsystem for the 2027 competition, writing MSE 307 lab reports, and building the next EOH.",
       proof: [
         { label: "Muck-removal system", href: "/work/boring-illini-muck-removal/" },
-        { label: "MSE 307", href: "/work/mse-307-solidification/" },
       ],
     },
   ],

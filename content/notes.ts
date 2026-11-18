@@ -53,6 +53,5 @@ export const notes: Note[] = [
       "The time-lapse explained it. The alloys undercooled by 4–13 °C before anything nucleated, so in most runs the primary phase didn't form during the controlled ramp at all. It formed during the hold at 35 °C, or in the final quench. The nominal cooling rate on the controller wasn't the rate the solid actually grew at.",
       "Field-to-field variation in a single sample was up to 58%, bigger than the effect we were trying to measure. To recover the textbook trend I'd cool continuously through solidification, run every rate on one station, and image more fields per condition.",
     ],
-    related: { label: "MSE 307 case study", href: "/work/mse-307-solidification/" },
   },
 ];

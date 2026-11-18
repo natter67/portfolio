@@ -164,7 +164,6 @@ export const projects: Project[] = [
         "Prepared metallurgical specimens — sectioning, mounting, grinding, polishing, and acid etching — for stereo and optical microscopy per industry standards.",
         "Verified properties and documented surface defects against spec with hardness testing, OES chemical composition analysis, and magnetic particle inspection.",
         "Analyzed microstructures and welds against engineering drawings, and investigated how upstream process and supplier changes affected weld quality.",
-        "Got hands-on time with SEM, EDS, and FTIR.",
       ],
       result: [
         "Materials and failure analysis on 25+ production components, written up as technical reports for engineering teams and clients.",
@@ -235,7 +234,7 @@ export const projects: Project[] = [
     tags: ["Microstructure", "Image analysis", "Characterization"],
     cover: "om-dendrites-cover",
     figures: ["om-transitions", "om-heating", "om-phase-fraction", "om-cooling-rates"],
-    published: true,
+    published: false,
     caseStudy: {
       problem: [
         "A micrograph usually shows you the end state of solidification. The interesting part — dendrites nucleating, eutectic growing — happens inside a casting where you can't watch it.",
@@ -251,7 +250,7 @@ export const projects: Project[] = [
         "The key insight: melting followed the equilibrium phase diagram, but solidification undercooled heavily, so most of it happened during isothermal holds. That's why the microstructure didn't simply refine at faster nominal cooling rates — a real lesson for process control.",
         "Graphite emissivity came out at ε = 0.799, inside the 0.78–0.90 literature range (N = 3.8 vs. a theoretical 4).",
         "Elastic modulus within 3% for every material, and within 0.1% for titanium and borosilicate. Recommended a borosilicate–Kovar seal.",
-        "Peltier coefficients matched to 0.4% between cooling and heating modes (49.9 vs. 50.1 K/A). Still in progress.",
+        "Peltier terms matched within about 1.4% between cooling and heating modes (49.5 vs. 50.2 K/A), and the measured Peltier coefficient (11.8 ± 1.6 V) agreed with S·T from the Seebeck run (11.4 V), confirming the Kelvin relation.",
       ],
       next: [
         "Recover the textbook trend: cool continuously through solidification (a lower hold temperature, or seeding to suppress undercooling), run every rate on a single station, and image more fields per condition — field-to-field variation (up to 58%) was bigger than the cooling-rate effect.",

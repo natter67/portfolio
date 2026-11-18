@@ -5,7 +5,6 @@ import MobileMenu from "./MobileMenu";
 const links = [
   { href: "/#work", label: "Work" },
   { href: "/#story", label: "Story" },
-  { href: "/#notes", label: "Notes" },
   { href: "/#skills", label: "Skills" },
   { href: "/#contact", label: "Contact" },
 ];

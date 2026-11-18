@@ -3,8 +3,7 @@ import Hero from "@/components/Hero";
 import SectionLabel from "@/components/SectionLabel";
 import WorkTable from "@/components/WorkTable";
 import { years } from "@/components/DataBar";
-import { Contact, Footer, Notes, Skills, Story, Strip, h2, wrap } from "@/components/Sections";
-import Bench from "@/components/Bench";
+import { Contact, Footer, Skills, Story, Strip, h2, wrap } from "@/components/Sections";
 import Logbook from "@/components/Logbook";
 import { getLogbook } from "@/lib/strava";
 import { categories, publishedProjects } from "@/content/projects";
@@ -62,13 +61,11 @@ export default async function Home() {
               cover: getPhoto(p.cover),
             }))}
           />
-          <Bench />
         </section>
 
         <Strip n={n()} />
         {log && <Logbook n={n()} data={log} />}
         <Story n={n()} />
-        <Notes n={n()} />
         <Skills n={n()} />
         <Contact n={n()} />
       </main>
