@@ -235,15 +235,6 @@ export const photos: Record<string, Photo> = Object.fromEntries(
 export const getPhoto = (id?: string | null) => (id ? photos[id] : undefined);
 
 export const heroPortraitId = "portrait";
-// The Bench: micrographs I captured, with the conditions that made them.
-export const bench: { id: string; sample: string; condition: string }[] = [
-  { id: "bench-23-melt", sample: "SCN–23 wt% camphor", condition: "Heating · 37.8 °C" },
-  { id: "bench-23-eutectic", sample: "SCN–23 wt% camphor", condition: "Cooling · 33.0 °C" },
-  { id: "bench-35-heat-a", sample: "SCN–35 wt% camphor", condition: "Heating · 38.7 °C" },
-  { id: "bench-35-heat-c", sample: "SCN–35 wt% camphor", condition: "Heating · 47 °C" },
-  { id: "bench-35-1c", sample: "SCN–35 wt% camphor", condition: "Cooled 1 °C/min" },
-  { id: "bench-35-10c", sample: "SCN–35 wt% camphor", condition: "Cooled 10 °C/min" },
-];
 
 export const stripPhotoIds = [
   "water-polo",

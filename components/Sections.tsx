@@ -7,8 +7,6 @@ import PhotoStrip from "./PhotoStrip";
 import SectionLabel from "./SectionLabel";
 import Signature from "./Signature";
 import FlightMap from "./FlightMap";
-import Link from "next/link";
-import { notes } from "@/content/notes";
 
 const wrap = "mx-auto max-w-7xl px-4 sm:px-8";
 const h2 = "reveal font-display mt-4 text-4xl font-semibold sm:text-5xl";
@@ -18,7 +16,7 @@ export function Strip() {
   return (
     <section aria-labelledby="strip-title" className="py-16">
       <div className={wrap}>
-        <SectionLabel n="02b">Off the clock</SectionLabel>
+        <SectionLabel n="02">Off the clock</SectionLabel>
         <h2 id="strip-title" className={h2}>
           Outside the lab
         </h2>
@@ -68,42 +66,10 @@ export function Story() {
   );
 }
 
-export function Notes() {
-  return (
-    <section id="notes" aria-labelledby="notes-title" className={`${wrap} scroll-mt-8 py-16`}>
-      <SectionLabel n="04">Field notes</SectionLabel>
-      <h2 id="notes-title" className={h2}>
-        How I think, in writing
-      </h2>
-      <ol className="mt-8 border-t border-ink">
-        {notes.map((n, i) => (
-          <li key={n.slug} className="border-b border-line">
-            <Link
-              href={`/notes/${n.slug}/`}
-              className="group grid gap-2 py-6 sm:grid-cols-[6rem_1fr_auto] sm:items-baseline sm:gap-8"
-            >
-              <span className="specimen text-ink-2">No. {String(i + 1).padStart(2, "0")}</span>
-              <span>
-                <span className="font-display block text-3xl leading-none transition-colors group-hover:text-accent">
-                  {n.title}
-                </span>
-                <span className="mt-2 block max-w-2xl text-ink-2">{n.dek}</span>
-              </span>
-              <span className="specimen text-ink-2">
-                {n.date} <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
 export function Toolkit() {
   return (
     <section id="toolkit" aria-labelledby="toolkit-title" className={`${wrap} scroll-mt-8 py-16`}>
-      <SectionLabel n="05">Toolkit</SectionLabel>
+      <SectionLabel n="04">Toolkit</SectionLabel>
       <h2 id="toolkit-title" className={h2}>
         What I work with
       </h2>
@@ -128,7 +94,7 @@ export function Toolkit() {
 export function Honors() {
   return (
     <section aria-labelledby="honors-title" className={`${wrap} py-16`}>
-      <SectionLabel n="06">Honors</SectionLabel>
+      <SectionLabel n="05">Honors</SectionLabel>
       <h2 id="honors-title" className="sr-only">
         Honors
       </h2>
@@ -160,7 +126,7 @@ export function Contact() {
     <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-8 overflow-hidden">
       <Pearlite className="opacity-[0.07] [mask-image:radial-gradient(ellipse_at_80%_50%,black,transparent_70%)]" />
       <div className={`${wrap} relative py-24`}>
-      <SectionLabel n="07">Contact</SectionLabel>
+      <SectionLabel n="06">Contact</SectionLabel>
       <h2 id="contact-title" className="reveal font-display mt-4 max-w-4xl text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.92] font-semibold">
         Got a part that broke? Let&apos;s find out why.
       </h2>

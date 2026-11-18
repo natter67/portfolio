@@ -9,7 +9,7 @@ export default function Logbook({ data }: { data: Data }) {
   const max = Math.max(1, ...data.weeks.map((w) => w.hours));
   return (
     <section aria-labelledby="log-title" className="mx-auto max-w-7xl px-4 py-16 sm:px-8">
-      <SectionLabel n="02c">Logbook</SectionLabel>
+      <SectionLabel n="02b">Logbook</SectionLabel>
       <h2 id="log-title" className="reveal font-display mt-4 text-4xl sm:text-5xl">
         Training load
       </h2>

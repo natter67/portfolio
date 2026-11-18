@@ -3,8 +3,7 @@ import Hero from "@/components/Hero";
 import SectionLabel from "@/components/SectionLabel";
 import WorkTable from "@/components/WorkTable";
 import { years } from "@/components/DataBar";
-import { Contact, Footer, Honors, Notes, Story, Strip, Toolkit } from "@/components/Sections";
-import Bench from "@/components/Bench";
+import { Contact, Footer, Honors, Story, Strip, Toolkit } from "@/components/Sections";
 import Logbook from "@/components/Logbook";
 import { getLogbook } from "@/lib/strava";
 import { categories, publishedProjects } from "@/content/projects";
@@ -61,11 +60,9 @@ export default async function Home() {
           />
         </section>
 
-        <Bench />
         <Strip />
         {log && <Logbook data={log} />}
         <Story />
-        <Notes />
         <Toolkit />
         <Honors />
         <Contact />
